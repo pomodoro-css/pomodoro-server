@@ -1,5 +1,7 @@
 package ch.css.pomodoro.service.dto;
 
+import org.joda.time.DateTime;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
@@ -10,6 +12,8 @@ public class User {
 	private String group;
 	private UserState state;
 	private int remainingTime;
+
+	private DateTime startTime;
 
 	public User(String nr) {
 		this.nr = nr;
@@ -52,6 +56,18 @@ public class User {
 
 	public void setRemainingTime(int remainingTime) {
 		this.remainingTime = remainingTime;
+	}
+
+	public void setStartTime(DateTime startTime) {
+		this.startTime = startTime;
+	}
+	
+	public DateTime getStartTime() {
+		return startTime;
+	}
+	
+	public boolean hasStartTime() {
+		return startTime != null;
 	}
 
 }

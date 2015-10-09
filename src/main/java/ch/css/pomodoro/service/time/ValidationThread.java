@@ -11,7 +11,7 @@ public class ValidationThread extends Thread {
 
 	public void run() {
 
-		while (!isInterrupted()) {
+		while (true) {
 			manager.validateUsers(interval);
 			try {
 				Thread.sleep(interval);

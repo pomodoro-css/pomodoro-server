@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -40,6 +41,20 @@ public class UsersResource {
 		} else {
 			return Response.notModified().build();
 		}
+	}
+
+	@PUT
+	@Path("/{nr}/Start")
+	public Response start(@PathParam("nr") String nr) {
+		UserManager.getInstance().start(nr);
+		return Response.ok().build();
+	}
+
+	@PUT
+	@Path("/{nr}/Stop")
+	public Response stop(@PathParam("nr") String nr) {
+		UserManager.getInstance().stop(nr);
+		return Response.ok().build();
 	}
 
 	@GET

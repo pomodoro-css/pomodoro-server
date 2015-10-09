@@ -2,10 +2,14 @@ package ch.css.pomodoro.service.time;
 
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
 
 public class UserManager {
+
+	private static int TOMATO_TIME = 1500; // 25min
 
 	private static UserManager instance;
 	private UserRepository repo;
@@ -49,9 +53,21 @@ public class UserManager {
 	}
 
 	public void validateUsers(int interval) {
-		for (User user : getUsers()) {
-			TimeCalculator.calculateRemaingingTime(user, interval);
-		}
+		TimeCalculator.calculateRemaingingTime(getUsers());
+	}
+
+	public void start(String nr) {
+		User user = repo.get(nr);
+		user.setState(UserState.BUSY);
+		user.setRemainingTime(TOMATO_TIME);
+		user.setStartTime(DateTime.now());
+	}
+
+	public void stop(String nr) {
+		User user = repo.get(nr);
+		user.setState(UserState.OFFLINE);
+		user.setRemainingTime(0);
+		user.setStartTime(null);
 	}
 
 }
