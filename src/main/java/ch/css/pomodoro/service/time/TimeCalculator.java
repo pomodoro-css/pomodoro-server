@@ -14,7 +14,7 @@ public class TimeCalculator {
 	static void calculateRemaingingTime(List<User> users) {
 		DateTime now = new DateTime();
 		for (User user : users) {
-			if (user.getState().isBusy()) {
+			if (user.getState().isBusy() && user.getStartTime() != null) {
 				calculate(user, now);
 			}
 		}
