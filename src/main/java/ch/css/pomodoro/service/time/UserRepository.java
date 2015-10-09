@@ -17,7 +17,7 @@ public class UserRepository {
 
 	boolean add(User user) {
 		if (!users.containsKey(user.getNr())) {
-			users.put(user.getName(), user);
+			users.put(user.getNr(), user);
 			return true;
 		}
 		return false;

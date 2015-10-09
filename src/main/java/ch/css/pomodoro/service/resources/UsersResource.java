@@ -10,6 +10,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
@@ -20,11 +21,13 @@ import ch.css.pomodoro.service.time.UserManager;
 public class UsersResource {
 
 	@POST
-	public boolean addUser(@QueryParam("nr") String nr, @QueryParam("name") String name,
+	public Response addUser(@QueryParam("nr") String nr, @QueryParam("name") String name,
 			@QueryParam("group") String group) {
 
 		if (nr == null || nr.length() < 4 || name == null) {
-			return false;
+			return Response.serverError()
+					.entity("adding user requires a number and a name (optional a group) like users?nr=1234&name=muster&group=teamA")
+					.build();
 		}
 
 		User user = new User(nr);
@@ -32,7 +35,11 @@ public class UsersResource {
 		user.setGroup(group);
 		user.setState(UserState.ONLINE);
 
-		return UserManager.getInstance().addUser(user);
+		if (UserManager.getInstance().addUser(user)) {
+			return Response.ok().build();
+		} else {
+			return Response.notModified().build();
+		}
 	}
 
 	@GET
@@ -48,8 +55,12 @@ public class UsersResource {
 
 	@DELETE
 	@Path("/{nr}")
-	public boolean deleteUser(@QueryParam("nr") String nr) {
-		return !UserManager.getInstance().removeUser(nr);
+	public Response deleteUser(@PathParam("nr") String nr) {
+		if (UserManager.getInstance().removeUser(nr)) {
+			return Response.ok().build();
+		} else {
+			return Response.notModified().build();
+		}
 	}
 
 }
