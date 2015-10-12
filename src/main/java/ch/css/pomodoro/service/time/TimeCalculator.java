@@ -9,9 +9,7 @@ import ch.css.pomodoro.service.dto.UserState;
 
 public class TimeCalculator {
 
-	private static int TOMATO_TIME_MILLIS = 1500000; // 25min
-
-	static void calculateRemaingingTime(List<User> users) {
+	static void calculateRemainingTime(List<User> users) {
 		DateTime now = new DateTime();
 		for (User user : users) {
 			if (user.getState().isBusy() && user.getStartTime() != null) {
@@ -26,9 +24,10 @@ public class TimeCalculator {
 
 		long usedTimeMillis = nowMillis - startMiliis;
 
-		long remainingTimeInMillis = TOMATO_TIME_MILLIS - usedTimeMillis;
+		long remainingTimeInMillis = (user.getTomatoTime() * 1000) - usedTimeMillis;
 		if (remainingTimeInMillis <= 0) {
 			user.setState(UserState.ONLINE);
+			user.setStartTime(null);
 			user.setRemainingTime(0);
 		} else {
 			int remainingTimeInSeconds = Long.valueOf(remainingTimeInMillis).intValue();

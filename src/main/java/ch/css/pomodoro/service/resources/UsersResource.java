@@ -26,7 +26,8 @@ public class UsersResource {
 			@QueryParam("group") String group) {
 
 		if (nr == null || nr.length() < 4 || name == null) {
-			return Response.serverError()
+			return Response
+					.serverError()
 					.entity("adding user requires a number and a name (optional a group) like users?nr=1234&name=muster&group=teamA")
 					.build();
 		}
@@ -44,14 +45,19 @@ public class UsersResource {
 	}
 
 	@PUT
-	@Path("/{nr}/Start")
-	public Response start(@PathParam("nr") String nr) {
-		UserManager.getInstance().start(nr);
+	@Path("/{nr}/start")
+	public Response start(@PathParam("nr") String nr, @QueryParam("tomatotime") int tomatotime) {
+
+		if (tomatotime == 0) {
+			tomatotime = 1500; // 1500 Sekunden = 25 Minuten
+		}
+
+		UserManager.getInstance().start(nr, tomatotime);
 		return Response.ok().build();
 	}
 
 	@PUT
-	@Path("/{nr}/Stop")
+	@Path("/{nr}/stop")
 	public Response stop(@PathParam("nr") String nr) {
 		UserManager.getInstance().stop(nr);
 		return Response.ok().build();
@@ -63,7 +69,7 @@ public class UsersResource {
 	}
 
 	@GET
-	@Path("/{nr}/State")
+	@Path("/{nr}/state")
 	public UserState getState(@PathParam("nr") String nr) {
 		return UserManager.getInstance().getUserState(nr);
 	}

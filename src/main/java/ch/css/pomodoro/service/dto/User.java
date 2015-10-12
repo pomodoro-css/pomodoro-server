@@ -12,6 +12,7 @@ public class User {
 	private String group;
 	private UserState state;
 	private int remainingTime;
+	private int tomatoTime;
 
 	private DateTime startTime;
 
@@ -61,13 +62,21 @@ public class User {
 	public void setStartTime(DateTime startTime) {
 		this.startTime = startTime;
 	}
-	
+
 	public DateTime getStartTime() {
 		return startTime;
 	}
-	
+
 	public boolean hasStartTime() {
 		return startTime != null;
+	}
+
+	public void setTomatoTime(int time) {
+		this.tomatoTime = time;
+	}
+
+	public int getTomatoTime() {
+		return tomatoTime;
 	}
 
 }

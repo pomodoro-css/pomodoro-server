@@ -9,8 +9,6 @@ import ch.css.pomodoro.service.dto.UserState;
 
 public class UserManager {
 
-	private static int TOMATO_TIME = 1500; // 25min
-
 	private static UserManager instance;
 	private UserRepository repo;
 
@@ -53,13 +51,14 @@ public class UserManager {
 	}
 
 	public void validateUsers(int interval) {
-		TimeCalculator.calculateRemaingingTime(getUsers());
+		TimeCalculator.calculateRemainingTime(getUsers());
 	}
 
-	public void start(String nr) {
+	public void start(String nr, int tomatotime) {
 		User user = repo.get(nr);
 		user.setState(UserState.BUSY);
-		user.setRemainingTime(TOMATO_TIME);
+		user.setTomatoTime(tomatotime);
+		user.setRemainingTime(tomatotime);
 		user.setStartTime(DateTime.now());
 	}
 
