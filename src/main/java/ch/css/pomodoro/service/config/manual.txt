@@ -6,7 +6,7 @@ Users
 
 DELETE
 /users/P12345
-> Löscht einen Bentuzer
+> Lï¿½scht einen Bentuzer
 
 GET 
 /users
@@ -16,7 +16,7 @@ GET
 
 POST 
 /users/?nr=P12345&name=Hans Muster&group=Killertomaten
-> Fügt einen Benutzer hinzu
+> Fï¿½gt einen Benutzer hinzu
 > nr zwingend
 > name zwingend
 > group optional
@@ -24,12 +24,13 @@ POST
 PUT 
 /users/P12345/start?tomatotime
 /users/P12345/start?tomatotime=50
-> Startet Tomato für Benutzer 
+/users/P12345/start?tomatotime=50&taskname=ich habe hunger
+> Startet Tomato fï¿½r Benutzer 
 > tomatotime in Sekunden
 > tomatotime ist optional (default 25min)
 
 /users/P12345/stop
-> Stop Tomato für Benutzer
+> Stop Tomato fï¿½r Benutzer
 
 
 Admin
