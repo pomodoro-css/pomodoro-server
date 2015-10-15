@@ -74,9 +74,9 @@ public class StatisticManager {
 			@Override
 			public int compare(UserStatistic stat1, UserStatistic stat2) {
 				if (stat1.getTotalTime() > stat2.getTotalTime()) {
-					return -1;
+					return 1;
 				}
-				return 1;
+				return -1;
 			}
 		});
 		return statisticSortable;
@@ -88,9 +88,9 @@ public class StatisticManager {
 			@Override
 			public int compare(UserStatistic stat1, UserStatistic stat2) {
 				if (stat1.getTotalTime() > stat2.getTotalTime()) {
-					return 1;
+					return -1;
 				}
-				return -1;
+				return 1;
 			}
 		});
 		return statisticSortable;

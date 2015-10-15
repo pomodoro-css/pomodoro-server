@@ -55,7 +55,7 @@ public class StatisticManagerTest {
 		StatisticManager manager = StatisticManager.getInstance();
 		User user = new User(nr);
 		user.setRemainingTime(remainingTime);
-		manager.record(user, 0, remainingTime);
+		manager.record(user, remainingTime, 0);
 	}
 
 }

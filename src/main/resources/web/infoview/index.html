@@ -33,7 +33,7 @@
 				{{tomato.userNr}}
 			</div>
 			<div class="col-md-4 infoview-font-normal">{{tomato.name}}</div>
-			<div class="col-md-4 infoview-font-normal">{{tomato.totalTime}}</div>
+			<div class="col-md-4 infoview-font-normal">{{tomato.totalTime | secondsToDateTime | date:'HH:mm:ss'}}</div>
 			<!--  <div>{{tomato}}</div> -->
 		</div>
 

@@ -5,9 +5,10 @@ angular.module('pomodoro').controller('pomodoroController', function(pomodoroSer
 	
 	var refreshData = function() {
 		vm.users = pomodoroService.loadUsers();
+		vm.biggestTomato = pomodoroService.loadBiggestTomato();
 	};
 
-	var promise = $interval(refreshData, 1000);
+	var promise = $interval(refreshData, 4000);
 
 	// Cancel interval on page changes
 	$scope.$on('$destroy', function(){
