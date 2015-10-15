@@ -12,7 +12,7 @@ public class UserRepository {
 	private Map<String, User> users;
 
 	UserRepository() {
-		users = new HashMap<String, User>();
+		users = new HashMap<>();
 	}
 
 	boolean add(User user) {
