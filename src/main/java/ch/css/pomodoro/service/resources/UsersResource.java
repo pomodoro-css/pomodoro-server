@@ -13,6 +13,8 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import ch.css.pomodoro.service.config.Config;
+import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
 import ch.css.pomodoro.service.time.UserManager;
@@ -31,23 +33,29 @@ public class UsersResource {
 	public User getState(@PathParam("nr") String nr) {
 		return UserManager.getInstance().getUser(nr);
 	}
+	
+	@PUT
+	@Path("/{nr}/offline")
+	public Response start(@PathParam("nr") String nr) {
+		UserManager.getInstance().setOffline(nr);
+		return Response.ok().build();
+	}
+
 
 	@PUT
 	@Path("/{nr}/start")
-	public Response start(@PathParam("nr") String nr, @QueryParam("tomatotime") int tomatotime) {
-
+	public Response start(@PathParam("nr") String nr, @QueryParam("tomatotime") int tomatotime, @QueryParam("taskname") String taskName) {
 		if (tomatotime == 0) {
-			tomatotime = 1500; // 1500 Sekunden = 25 Minuten
+			tomatotime = Config.defaultTomatoTimeInMillis;
 		}
-
-		UserManager.getInstance().start(nr, tomatotime);
+		UserManager.getInstance().start(nr, tomatotime, taskName );
 		return Response.ok().build();
 	}
 
 	@PUT
 	@Path("/{nr}/stop")
 	public Response stop(@PathParam("nr") String nr) {
-		UserManager.getInstance().stop(nr);
+		UserManager.getInstance().stop(nr, TomatoTerminationReason.TERMINATED_DUE_USER);
 		return Response.ok().build();
 	}
 

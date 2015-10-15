@@ -1,6 +1,7 @@
 package ch.css.pomodoro.service.dto;
 
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.joda.time.DateTime;
 
@@ -15,15 +16,17 @@ public class User {
 	private UserState state;
 	private int remainingTime;
 	private int tomatoTime;
-	private Vector<PomodoroTime> pomodoroTimeVector;
+	private List<Tomato> tomatoHistory;
 
 	private DateTime startTime;
+
+	private String taskName;
 
 	public User(String nr) {
 		this.nr = nr.toUpperCase();
 		state = UserState.OFFLINE;
 		remainingTime = 0;
-		pomodoroTimeVector = new Vector<PomodoroTime>();
+		tomatoHistory = new ArrayList<>();
 	}
 
 	@JsonProperty
@@ -82,17 +85,17 @@ public class User {
 	public int getTomatoTime() {
 		return tomatoTime;
 	}
-
-	public void startTimer() {
-		pomodoroTimeVector.addElement(new PomodoroTime());
-	}
-
-	public void stopTimer(TimerState value) {
-		pomodoroTimeVector.lastElement().stop(value);
-	}
 	
-	public Vector<PomodoroTime> getPomodoroTimeVector(){
-		return pomodoroTimeVector;
+	public List<Tomato> getTomatoHistory(){
+		return tomatoHistory;
+	}
+
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+
+	public String getTaskName() {
+		return taskName;
 	}
 
 }

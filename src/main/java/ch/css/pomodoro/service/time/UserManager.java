@@ -4,7 +4,8 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import ch.css.pomodoro.service.dto.TimerState;
+import ch.css.pomodoro.service.dto.Tomato;
+import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
 
@@ -44,24 +45,50 @@ public class UserManager {
 	}
 
 	public void validateUsers() {
-		TimeCalculator.calculateRemainingTime(getUsers());
+		DateTime now = new DateTime();
+		for (User user : getUsers()) {
+			if (user.getState().isBusy() && user.getStartTime() != null) {
+				long remainingTimeInMillis = TimeCalculator.calculate(user, now);
+				if (remainingTimeInMillis <= 0) {
+					stop(user.getNr(), TomatoTerminationReason.TERMINATED_DUE_PROCESS);
+				} else {
+					int remainingTimeInSeconds = Long.valueOf(remainingTimeInMillis).intValue();
+					remainingTimeInSeconds /= 1000;
+					user.setRemainingTime(remainingTimeInSeconds);
+				}
+			}
+		}
+
 	}
 
-	public void start(String nr, int tomatotime) {
+	public void start(String nr, int tomatotime, String taskName) {
 		User user = repo.get(nr);
 		user.setState(UserState.BUSY);
 		user.setTomatoTime(tomatotime);
 		user.setRemainingTime(tomatotime);
+		user.setTaskName(taskName);
 		user.setStartTime(DateTime.now());
-		user.startTimer();
 	}
 
-	public void stop(String nr) {
+	public void stop(String nr, TomatoTerminationReason reason) {
 		User user = repo.get(nr);
-		user.setState(UserState.ONLINE);
-		user.setRemainingTime(0);
-		user.setStartTime(null);
-		user.stopTimer(TimerState.TERMINATED_DUE_USER);
+		if (user != null && user.getState().isBusy()) {
+			Tomato tomato = new Tomato(user.getTomatoTime(), user.getStartTime(), reason, user.getTaskName());
+			user.getTomatoHistory().add(tomato);
+
+			user.setState(UserState.ONLINE);
+			user.setRemainingTime(0);
+			user.setStartTime(null);
+		}
+	}
+
+	public void setOffline(String nr) {
+		User user = getUser(nr);
+		if(user != null){
+			stop(nr, TomatoTerminationReason.TERMINATED_DUE_USER);
+			user.setState(UserState.OFFLINE);
+		}
+		
 	}
 
 }

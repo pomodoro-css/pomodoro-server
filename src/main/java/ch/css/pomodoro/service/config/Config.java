@@ -3,6 +3,7 @@ package ch.css.pomodoro.service.config;
 public class Config {
 
 	private int timerInMillis;
+	public static final int defaultTomatoTimeInMillis = 1500;
 
 	public Config() {
 		this.timerInMillis = 1000; // 1 second
