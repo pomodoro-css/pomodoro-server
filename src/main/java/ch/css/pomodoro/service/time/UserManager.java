@@ -1,9 +1,11 @@
 package ch.css.pomodoro.service.time;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
 
+import ch.css.pomodoro.service.dto.Group;
 import ch.css.pomodoro.service.dto.Tomato;
 import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
@@ -84,11 +86,19 @@ public class UserManager {
 
 	public void setOffline(String nr) {
 		User user = getUser(nr);
-		if(user != null){
+		if (user != null) {
 			stop(nr, TomatoTerminationReason.TERMINATED_DUE_USER);
 			user.setState(UserState.OFFLINE);
 		}
-		
+
+	}
+
+	public List<Group> getGroups() {
+		List<Group> groups = new ArrayList<>();
+		for (User user : getUsers()) {
+			groups.add(user.getGroup());
+		}
+		return groups;
 	}
 
 }

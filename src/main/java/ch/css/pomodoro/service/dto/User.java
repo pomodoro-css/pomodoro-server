@@ -12,7 +12,7 @@ public class User {
 	private final String nr;
 
 	private String name;
-	private String group;
+	private Group group;
 	private UserState state;
 	private int remainingTime;
 	private int tomatoTime;
@@ -42,12 +42,12 @@ public class User {
 		this.name = name;
 	}
 
-	public String getGroup() {
+	public Group getGroup() {
 		return group;
 	}
 
 	public void setGroup(String group) {
-		this.group = group;
+		this.group = new Group(group);
 	}
 
 	public UserState getState() {
@@ -85,8 +85,8 @@ public class User {
 	public int getTomatoTime() {
 		return tomatoTime;
 	}
-	
-	public List<Tomato> getTomatoHistory(){
+
+	public List<Tomato> getTomatoHistory() {
 		return tomatoHistory;
 	}
 
