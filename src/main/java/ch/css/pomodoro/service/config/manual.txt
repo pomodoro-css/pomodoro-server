@@ -1,31 +1,65 @@
+Host/PORT
+localhost:8080
 
-GET /users
+Users
+-----
+
+DELETE
+/users/P12345
+> Löscht einen Bentuzer
+
+GET 
+/users
 > Liefert alle Benutzer
-
-
-GET /users/P12345
+/users/P12345
 > Liefert einen Benutzer
 
-
-PUT /users/P12345/start?tomatotime=50
-> Startet Tomato für Benutzer 
-> tomatotime in Sekunden
-> tomatotime ist optional (default 25min)
-
-
-PUT /users/P12345/stop
-> Stop Tomato für Benutzer
-
-
-POST /users/?nr=P12345&name=Hans Muster&group=Killertomaten
+POST 
+/users/?nr=P12345&name=Hans Muster&group=Killertomaten
 > Fügt einen Benutzer hinzu
 > nr zwingend
 > name zwingend
 > group optional
 
+PUT 
+/users/P12345/start?tomatotime
+/users/P12345/start?tomatotime=50
+> Startet Tomato für Benutzer 
+> tomatotime in Sekunden
+> tomatotime ist optional (default 25min)
 
-DELETE /users/P12345
-> Löscht einen Bentuzer
+/users/P12345/stop
+> Stop Tomato für Benutzer
+
+
+Admin
+-----
+GET     
+/admin/config
+> liefert application config
+    
+PUT     
+/admin/timer/start
+> startet timer neu
+/admin/timer/stop
+> stoped timer
+
+
+
+---------------------------------------------------------------------------------------------
+HOST/PORT
+localhost:8081
+---------------------------------------------------------------------------------------------
+
+/healthcheck
+> liefert status application
+
+
+
+
+
+
+
 
 
 
