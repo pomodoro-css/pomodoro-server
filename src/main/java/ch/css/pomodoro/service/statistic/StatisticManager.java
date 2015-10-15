@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import ch.css.pomodoro.service.dto.Tomato;
-import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserStatistic;
 
