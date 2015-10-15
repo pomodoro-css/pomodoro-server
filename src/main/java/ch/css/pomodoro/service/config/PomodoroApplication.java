@@ -19,12 +19,13 @@ public class PomodoroApplication extends Application<PomodoroConfiguration> {
 	@Override
 	public void initialize(Bootstrap<PomodoroConfiguration> bootstrap) {
 		super.initialize(bootstrap);
-		bootstrap.addBundle(new AssetsBundle("/web/infoview", "/info", "index.html", "infoview"));
+		// global libs
 		bootstrap.addBundle(new AssetsBundle("/web/lib/", "/lib", null, "lib"));
+
+		// info view
+		bootstrap.addBundle(new AssetsBundle("/web/infoview", "/info", "index.html", "infoview"));
 		
-		//bootstrap.addBundle(new AssetsBundle("/web/infoview/js", "/info/js", null, "js"));
-		
-		
+		// admin view
 		bootstrap.addBundle(new AssetsBundle("/web/adminview/", "/admin", "index.html", "adminview"));
 	}
 

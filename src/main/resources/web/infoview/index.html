@@ -3,24 +3,22 @@
 <head>
 <title>Pomodoro en guete</title>
 <meta charset="UTF-8">
+<script src="/lib/jquery-2.1.4/jquery-2.1.4.min.js"></script>
 <script src="/lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="/lib/angular-1.4/angular.min.js"></script>
+<script src="/lib/angular-1.4/angular-route.min.js"></script>
+<script src="/lib/angular-1.4/angular-resource.min.js"></script>
 
 <script src="/info/js/pomodoro.modul.js"></script>
 <script src="/info/js/pomodoro.controller.js"></script>
+<script src="/info/js/pomodoro.service.js"></script>
 </head>
 
-<body ng-app="pomodoro">
+<body ng-app="pomodoro" ng-controller="pomodoroController as vm">
  <h1>Angemeldete Tomaten</h1>
- <h2>{{2-1}}</h2>
- <h2>hallo adi3</h2>
  <ul>
-  <li ng-repeat="tomato in tomatoes">{{tomato.name}}</li>
+  <li ng-repeat="user in vm.users">{{user.name}} {{user.group.name}} {{user.state}}</li>
  </ul>
-
-
-
-
 
 
 </body>
