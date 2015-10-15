@@ -1,8 +1,9 @@
 package ch.css.pomodoro.service.config;
 
+import ch.css.pomodoro.service.health.ConfigCheck;
+import ch.css.pomodoro.service.health.TimerAliveCheck;
+import ch.css.pomodoro.service.resources.AdminResource;
 import ch.css.pomodoro.service.resources.UsersResource;
-import ch.css.pomodoro.service.time.UserManager;
-import ch.css.pomodoro.service.time.ValidationThread;
 import io.dropwizard.Application;
 import io.dropwizard.setup.Environment;
 
@@ -20,9 +21,11 @@ public class PomodoroApplication extends Application<PomodoroConfiguration> {
 	@Override
 	public void run(PomodoroConfiguration configuration, Environment environment) throws Exception {
 		environment.jersey().register(new UsersResource());
+		environment.jersey().register(new AdminResource());
 
-		UserManager manager = UserManager.getInstance();
-		ValidationThread validator = new ValidationThread(manager);
-		validator.start();
+		AdminManager.init();
+
+		environment.healthChecks().register("config", new ConfigCheck());
+		environment.healthChecks().register("thread", new TimerAliveCheck());
 	}
 }

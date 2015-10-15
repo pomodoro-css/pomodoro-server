@@ -42,7 +42,7 @@ public class UserManager {
 		return repo.get(nr);
 	}
 
-	public void validateUsers(int interval) {
+	public void validateUsers() {
 		TimeCalculator.calculateRemainingTime(getUsers());
 	}
 
