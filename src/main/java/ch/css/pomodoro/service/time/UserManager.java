@@ -56,7 +56,7 @@ public class UserManager {
 
 	public void stop(String nr) {
 		User user = repo.get(nr);
-		user.setState(UserState.OFFLINE);
+		user.setState(UserState.ONLINE);
 		user.setRemainingTime(0);
 		user.setStartTime(null);
 	}
