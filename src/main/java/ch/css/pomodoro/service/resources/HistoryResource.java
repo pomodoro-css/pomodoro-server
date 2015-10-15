@@ -17,7 +17,7 @@ public class HistoryResource {
 
 	@GET
 	@Path("/{nr}")
-	public List<Tomato> getState(@PathParam("nr") String nr) {
+	public List<Tomato> getHistory(@PathParam("nr") String nr) {
 		return UserManager.getInstance().getHistory(nr);
 	}
 
