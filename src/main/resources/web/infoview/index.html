@@ -21,6 +21,7 @@
 <script src="/info/js/pomodoro.modul.js"></script>
 <script src="/info/js/pomodoro.controller.js"></script>
 <script src="/info/js/pomodoro.service.js"></script>
+<script src="/info/js/pomodoro.seconds-to-time.filter.js"></script>
 </head>
 
 <body ng-app="pomodoro" ng-controller="pomodoroController as vm">
@@ -31,23 +32,17 @@
 			class="container-fluid jumbotron">
 			<h3>{{key}}</h3>
 			<hr>
-			<div class="row">
-				<div class="col-md-1 text-danger"></div>
-				<div class="col-md-4 text-danger">User</div>
-				<div class="col-md-4 text-danger">Name</div>
-				<div class="col-md-2 text-danger">Time remaining</div>
-			</div>
 			<div class="row" ng-repeat="user in value">
 				<div class="col-md-1">
 					<img
-						src="/info/icons/tomato_{{user.state === 'ONLINE' ? 'green' : 'red'}}.png"
+						ng-src="/info/icons/tomato_{{user.state === 'ONLINE' ? 'green' : 'red'}}.png"
 						alt="Description" width="50px" />
 				</div>
-				<div class="col-md-4">
-					<i class="fa fa-user"></i> {{user.nr}}
+				<div class="col-md-4 infoview-font-normal">
+					<i class="fa fa-user infoview-font-normal"></i> {{user.nr}}
 				</div>
-				<div class="col-md-4">{{user.name}}</div>
-				<div class="col-md-2">{{user.remainingTime}}</div>
+				<div class="col-md-4 infoview-font-normal">{{user.name}}</div>
+				<div class="col-md-2 infoview-font-normal">{{user.remainingTime | secondsToDateTime | date:'HH:mm:ss'}}</div>
 			</div>
 
 		</div>
