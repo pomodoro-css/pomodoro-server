@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import ch.css.pomodoro.service.dto.TerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
 
@@ -52,6 +53,7 @@ public class UserManager {
 		user.setTomatoTime(tomatotime);
 		user.setRemainingTime(tomatotime);
 		user.setStartTime(DateTime.now());
+		user.startTimer();
 	}
 
 	public void stop(String nr) {
@@ -59,6 +61,7 @@ public class UserManager {
 		user.setState(UserState.ONLINE);
 		user.setRemainingTime(0);
 		user.setStartTime(null);
+		user.stopTimer(TerminationReason.USER);
 	}
 
 }
