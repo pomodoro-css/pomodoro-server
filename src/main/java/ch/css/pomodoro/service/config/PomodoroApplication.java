@@ -4,6 +4,7 @@ import ch.css.pomodoro.service.health.ConfigCheck;
 import ch.css.pomodoro.service.health.TimerAliveCheck;
 import ch.css.pomodoro.service.resources.AdminResource;
 import ch.css.pomodoro.service.resources.GroupResource;
+import ch.css.pomodoro.service.resources.HistoryResource;
 import ch.css.pomodoro.service.resources.UsersResource;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
@@ -24,7 +25,7 @@ public class PomodoroApplication extends Application<PomodoroConfiguration> {
 
 		// info view
 		bootstrap.addBundle(new AssetsBundle("/web/infoview", "/info", "index.html", "infoview"));
-		
+
 		// admin view
 		bootstrap.addBundle(new AssetsBundle("/web/adminview/", "/admin", "index.html", "adminview"));
 	}
@@ -39,6 +40,7 @@ public class PomodoroApplication extends Application<PomodoroConfiguration> {
 
 		environment.jersey().register(new UsersResource());
 		environment.jersey().register(new GroupResource());
+		environment.jersey().register(new HistoryResource());
 		environment.jersey().register(new AdminResource());
 
 		AdminManager.init();

@@ -15,9 +15,11 @@ public class UserManager {
 
 	private static UserManager instance;
 	private UserRepository repo;
+	private TomatoHistory history;
 
 	private UserManager() {
 		repo = new UserRepository();
+		history = new TomatoHistory();
 	}
 
 	public static UserManager getInstance() {
@@ -75,8 +77,7 @@ public class UserManager {
 	public void stop(String nr, TomatoTerminationReason reason) {
 		User user = repo.get(nr);
 		if (user != null && user.getState().isBusy()) {
-			Tomato tomato = new Tomato(user.getTomatoTime(), user.getStartTime(), reason, user.getTaskName());
-			user.getTomatoHistory().add(tomato);
+			history.recordUser(user, reason);
 
 			user.setState(UserState.ONLINE);
 			user.setRemainingTime(0);
@@ -99,6 +100,10 @@ public class UserManager {
 			groups.add(user.getGroup());
 		}
 		return groups;
+	}
+	
+	public List<Tomato> getHistory(String nr) {
+		return history.getHistory(nr);
 	}
 
 }

@@ -1,8 +1,5 @@
 package ch.css.pomodoro.service.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +13,6 @@ public class User {
 	private UserState state;
 	private int remainingTime;
 	private int tomatoTime;
-	private List<Tomato> tomatoHistory;
 
 	private DateTime startTime;
 
@@ -26,7 +22,6 @@ public class User {
 		this.nr = nr.toUpperCase();
 		state = UserState.OFFLINE;
 		remainingTime = 0;
-		tomatoHistory = new ArrayList<>();
 	}
 
 	@JsonProperty
@@ -84,10 +79,6 @@ public class User {
 
 	public int getTomatoTime() {
 		return tomatoTime;
-	}
-
-	public List<Tomato> getTomatoHistory() {
-		return tomatoHistory;
 	}
 
 	public void setTaskName(String taskName) {
