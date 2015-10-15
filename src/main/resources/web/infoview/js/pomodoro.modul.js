@@ -1,1 +1,1 @@
-var pomodoroApp = angular.module('pomodoro', ['ngResource']);
+var pomodoroApp = angular.module('pomodoro', ['ngResource', 'angular.filter']);
