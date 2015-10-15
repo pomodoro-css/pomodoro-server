@@ -6,6 +6,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import ch.css.pomodoro.service.dto.Group;
+import ch.css.pomodoro.service.dto.Tomato;
 import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
@@ -99,6 +100,10 @@ public class UserManager {
 			groups.add(user.getGroup());
 		}
 		return groups;
+	}
+	
+	public List<Tomato> getHistory(String nr) {
+		return history.getHistory(nr);
 	}
 
 }

@@ -11,7 +11,7 @@ localhost:8080
 ----------------------------------------------------------------------------------------------
 
 Users
------
+--------------------------------------
 
 DELETE
 /users/P12345
@@ -42,8 +42,17 @@ PUT
 > Stop Tomato fï¿½r Benutzer
 
 
+
+History
+------------------------------
+GET
+/history/p1122
+> liefert history für bestimmten benutzer
+
+
+
 Admin
------
+------------------------------
 GET     
 /admin/config
 > liefert application config
