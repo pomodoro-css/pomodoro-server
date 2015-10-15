@@ -1,0 +1,32 @@
+
+GET /users
+> Liefert alle Benutzer
+
+
+GET /users/P12345
+> Liefert einen Benutzer
+
+
+PUT /users/P12345/start?tomatotime=50
+> Startet Tomato für Benutzer 
+> tomatotime in Sekunden
+> tomatotime ist optional (default 25min)
+
+
+PUT /users/P12345/stop
+> Stop Tomato für Benutzer
+
+
+POST /users/?nr=P12345&name=Hans Muster&group=Killertomaten
+> Fügt einen Benutzer hinzu
+> nr zwingend
+> name zwingend
+> group optional
+
+
+DELETE /users/P12345
+> Löscht einen Bentuzer
+
+
+
+

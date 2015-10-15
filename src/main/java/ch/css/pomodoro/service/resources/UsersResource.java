@@ -21,27 +21,15 @@ import ch.css.pomodoro.service.time.UserManager;
 @Produces(MediaType.APPLICATION_JSON)
 public class UsersResource {
 
-	@POST
-	public Response addUser(@QueryParam("nr") String nr, @QueryParam("name") String name,
-			@QueryParam("group") String group) {
+	@GET
+	public List<User> getAll() {
+		return UserManager.getInstance().getUsers();
+	}
 
-		if (nr == null || nr.length() < 4 || name == null) {
-			return Response
-					.serverError()
-					.entity("adding user requires a number and a name (optional a group) like users?nr=1234&name=muster&group=teamA")
-					.build();
-		}
-
-		User user = new User(nr);
-		user.setName(name);
-		user.setGroup(group);
-		user.setState(UserState.ONLINE);
-
-		if (UserManager.getInstance().addUser(user)) {
-			return Response.ok().build();
-		} else {
-			return Response.notModified().build();
-		}
+	@GET
+	@Path("/{nr}")
+	public User getState(@PathParam("nr") String nr) {
+		return UserManager.getInstance().getUser(nr);
 	}
 
 	@PUT
@@ -63,15 +51,26 @@ public class UsersResource {
 		return Response.ok().build();
 	}
 
-	@GET
-	public List<User> getAll() {
-		return UserManager.getInstance().getUsers();
-	}
+	@POST
+	public Response addUser(@QueryParam("nr") String nr, @QueryParam("name") String name,
+			@QueryParam("group") String group) {
 
-	@GET
-	@Path("/{nr}/state")
-	public UserState getState(@PathParam("nr") String nr) {
-		return UserManager.getInstance().getUserState(nr);
+		if (nr == null || nr.length() < 4 || name == null) {
+			return Response.serverError()
+					.entity("adding user requires a number and a name (optional a group) like users?nr=1234&name=muster&group=teamA")
+					.build();
+		}
+
+		User user = new User(nr);
+		user.setName(name);
+		user.setGroup(group);
+		user.setState(UserState.ONLINE);
+
+		if (UserManager.getInstance().addUser(user)) {
+			return Response.ok().build();
+		} else {
+			return Response.notModified().build();
+		}
 	}
 
 	@DELETE

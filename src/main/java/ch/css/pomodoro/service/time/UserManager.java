@@ -42,14 +42,6 @@ public class UserManager {
 		return repo.get(nr);
 	}
 
-	public UserState getUserState(String nr) {
-		User user = repo.get(nr);
-		if (user != null) {
-			return user.getState();
-		}
-		return null;
-	}
-
 	public void validateUsers(int interval) {
 		TimeCalculator.calculateRemainingTime(getUsers());
 	}
