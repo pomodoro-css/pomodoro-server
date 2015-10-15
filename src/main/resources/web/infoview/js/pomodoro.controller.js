@@ -1,6 +1,7 @@
 angular.module('pomodoro').controller('pomodoroController', function(pomodoroService, $filter, $interval, $scope) {
 	var vm = this;
 	vm.users = pomodoroService.loadUsers();
+	vm.biggestTomato = pomodoroService.loadBiggestTomato();
 	
 	var refreshData = function() {
 		vm.users = pomodoroService.loadUsers();
