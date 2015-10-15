@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 
 <link href="/lib/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link href="/lib/bootstrap-3.3.5/fonts/glyphicons-halfings-regular.eot" rel="stylesheet">
 
 <script src="/lib/jquery-2.1.4/jquery-2.1.4.min.js"></script>
 <script src="/lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -21,7 +22,7 @@
  <h1>Angemeldete Tomaten</h1>
  
  <ul ng-repeat="user in vm.users">
-  <li class="label label-primary">{{user.nr}}</li>
+  <li class="label label-primary"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{user.nr}}</li>
   <li>{{user.name}}</li>
   <li>{{user.group.name}}</li>
   <li>{{user.state}}</li>
