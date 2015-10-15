@@ -5,9 +5,10 @@
 <meta charset="UTF-8">
 
 <link href="/lib/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
-<link href="/lib/bootstrap-3.3.5/fonts/glyphicons-halfings-regular.eot" rel="stylesheet">
 
-<link href="/lib/font-awesome-4.4.0/css/font-awesome.min.css" rel="stylesheet" >
+<link href="/lib/font-awesome-4.4.0/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href="/info/css/infoview.css" rel="stylesheet">
 
 <script src="/lib/jquery-2.1.4/jquery-2.1.4.min.js"></script>
 <script src="/lib/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -23,26 +24,34 @@
 </head>
 
 <body ng-app="pomodoro" ng-controller="pomodoroController as vm">
- <h1>Angemeldete Tomaten</h1>
- 
- <div ng-repeat="(key, value) in vm.users | groupBy :'group.name'" class="container-fluid jumbotron">
- <h3>{{key}}</h3>
- <div class="row">
- 	<div class="col-md-4 text-danger">User</div>
- 	<div class="col-md-4 text-danger">Name</div>
- 	<div class="col-md-1 text-danger">State</div>
- 	<div class="col-md-2 text-danger">Time remaining</div>
- </div>
- <div class="row" ng-repeat="user in value">
-  <div class="col-md-4">
-  	<i class="fa fa-user"></i> {{user.nr}}
-  </div>
-  <div class="col-md-4">{{user.name}}</div>
-  <div class="col-md-1">{{user.state}}</div>
-  <div class="col-md-2">{{user.remainingTime}}</div>
- </div>
- 
- </div>
+	<div class="container">
+		<h1>Angemeldete Tomaten</h1>
+
+		<div ng-repeat="(key, value) in vm.users | groupBy :'group.name'"
+			class="container-fluid jumbotron">
+			<h3>{{key}}</h3>
+			<hr>
+			<div class="row">
+				<div class="col-md-1 text-danger"></div>
+				<div class="col-md-4 text-danger">User</div>
+				<div class="col-md-4 text-danger">Name</div>
+				<div class="col-md-2 text-danger">Time remaining</div>
+			</div>
+			<div class="row" ng-repeat="user in value">
+				<div class="col-md-1">
+					<img
+						src="/info/icons/tomato_{{user.state === 'ONLINE' ? 'green' : 'red'}}.png"
+						alt="Description" width="50px" />
+				</div>
+				<div class="col-md-4">
+					<i class="fa fa-user"></i> {{user.nr}}
+				</div>
+				<div class="col-md-4">{{user.name}}</div>
+				<div class="col-md-2">{{user.remainingTime}}</div>
+			</div>
+
+		</div>
+	</div>
 
 
 </body>
