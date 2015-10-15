@@ -1,5 +1,7 @@
 package ch.css.pomodoro.service.dto;
 
+import java.util.Vector;
+
 import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -13,13 +15,15 @@ public class User {
 	private UserState state;
 	private int remainingTime;
 	private int tomatoTime;
+	private Vector<PomodoroTime> pomodoroTimeVector;
 
 	private DateTime startTime;
 
 	public User(String nr) {
-		this.nr = nr;
+		this.nr = nr.toUpperCase();
 		state = UserState.OFFLINE;
 		remainingTime = 0;
+		pomodoroTimeVector = new Vector<PomodoroTime>();
 	}
 
 	@JsonProperty
@@ -77,6 +81,18 @@ public class User {
 
 	public int getTomatoTime() {
 		return tomatoTime;
+	}
+
+	public void startTimer() {
+		pomodoroTimeVector.addElement(new PomodoroTime());
+	}
+
+	public void stopTimer(TerminationReason value) {
+		pomodoroTimeVector.lastElement().stop(value);
+	}
+	
+	public Vector<PomodoroTime> getPomodoroTimeVector(){
+		return pomodoroTimeVector;
 	}
 
 }

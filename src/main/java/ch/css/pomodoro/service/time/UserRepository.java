@@ -29,7 +29,7 @@ public class UserRepository {
 	}
 
 	User get(String nr) {
-		return users.get(nr);
+		return users.get(nr.toUpperCase());
 	}
 
 	List<User> getAll() {
