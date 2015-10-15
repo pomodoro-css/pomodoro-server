@@ -8,6 +8,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserStatistic;
 import ch.css.pomodoro.service.statistic.StatisticManager;
 
@@ -30,7 +31,7 @@ public class StatisticResource {
 	@GET
 	@Path("/biggest/{nr}")
 	public int getConfig(@PathParam("nr") String nr) {
-		return StatisticManager.getInstance().getTotalTime(nr);
+		return StatisticManager.getInstance().getTotalTime(new User(nr));
 	}
 
 }

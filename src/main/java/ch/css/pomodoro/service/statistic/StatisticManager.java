@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import ch.css.pomodoro.service.dto.Tomato;
+import ch.css.pomodoro.service.dto.TomatoTerminationReason;
+import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserStatistic;
 
 public class StatisticManager {
@@ -27,18 +29,19 @@ public class StatisticManager {
 		return instance;
 	}
 
-	public int getTotalTime(String nr) {
-		return getStatistic(nr.toUpperCase()).getTotalTime();
+	public int getTotalTime(User user) {
+		return getStatistic(user).getTotalTime();
 	}
 
-	public void add(Tomato tomato) {
-		UserStatistic statistic = getStatistic(tomato.getUserNr());
-		int totalTime = statistic.getTotalTime() + tomato.getTomatoTime();
-		if (tomato.getRemainingTime() > 0) {
-			totalTime -= tomato.getRemainingTime();
+	public void record(User user, int oldRemainingTime, int newRemainingTime) {
+		UserStatistic statistic = getStatistic(user);
+		int totalTime = statistic.getTotalTime();
+		if (newRemainingTime <= 0) {
+			totalTime += oldRemainingTime;
+		} else {
+			totalTime += oldRemainingTime - newRemainingTime;
 		}
 		statistic.setTotalTime(totalTime);
-
 	}
 
 	public List<UserStatistic> getLooserTomatoes() {
@@ -56,11 +59,11 @@ public class StatisticManager {
 		return statisticSortable.subList(0, max);
 	}
 
-	private UserStatistic getStatistic(String nr) {
-		UserStatistic statistic = statisticsRepo.get(nr);
+	private UserStatistic getStatistic(User user) {
+		UserStatistic statistic = statisticsRepo.get(user.getNr());
 		if (statistic == null) {
-			statistic = new UserStatistic(nr);
-			statisticsRepo.put(nr, statistic);
+			statistic = new UserStatistic(user);
+			statisticsRepo.put(user.getNr(), statistic);
 		}
 		return statistic;
 	}

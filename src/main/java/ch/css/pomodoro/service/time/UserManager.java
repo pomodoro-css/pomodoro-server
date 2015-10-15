@@ -10,6 +10,7 @@ import ch.css.pomodoro.service.dto.Tomato;
 import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
+import ch.css.pomodoro.service.statistic.StatisticManager;
 
 public class UserManager {
 
@@ -53,6 +54,11 @@ public class UserManager {
 		for (User user : getUsers()) {
 			if (user.getState().isBusy() && user.getStartTime() != null) {
 				long remainingTimeInMillis = TimeCalculator.calculate(user, now);
+
+				// record user before stop
+				StatisticManager.getInstance().record(user, user.getRemainingTime(),
+						(int) remainingTimeInMillis / 1000);
+
 				if (remainingTimeInMillis <= 0) {
 					stop(user.getNr(), TomatoTerminationReason.TERMINATED_DUE_PROCESS);
 				} else {
@@ -101,7 +107,7 @@ public class UserManager {
 		}
 		return groups;
 	}
-	
+
 	public List<Tomato> getHistory(String nr) {
 		return history.getHistory(nr);
 	}

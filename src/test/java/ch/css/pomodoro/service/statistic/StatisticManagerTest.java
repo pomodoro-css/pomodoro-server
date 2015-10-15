@@ -6,8 +6,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import ch.css.pomodoro.service.dto.Tomato;
-import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserStatistic;
 
@@ -33,19 +31,23 @@ public class StatisticManagerTest {
 		StatisticManager manager = StatisticManager.getInstance();
 
 		User user = new User("USER5");
-		manager.add(new Tomato(user, TomatoTerminationReason.TERMINATED_DUE_PROCESS));
+		manager.record(user, 0, 0);
 
-		assertEquals(0, manager.getTotalTime(user.getNr()));
+		assertEquals(0, manager.getTotalTime(user));
 
-		user.setTomatoTime(20);
-		user.setRemainingTime(7);
-		manager.add(new Tomato(user, TomatoTerminationReason.TERMINATED_DUE_PROCESS));
-		assertEquals(13, manager.getTotalTime(user.getNr()));
+		user.setTomatoTime(13);
+		manager.record(user, 13, 0);
+		assertEquals(13, manager.getTotalTime(user));
 
 		user.setTomatoTime(8);
-		user.setRemainingTime(3);
-		manager.add(new Tomato(user, TomatoTerminationReason.TERMINATED_DUE_PROCESS));
-		assertEquals(18, manager.getTotalTime(user.getNr()));
+		user.setRemainingTime(5);
+		manager.record(user, 8, 5);
+		assertEquals(16, manager.getTotalTime(user));
+
+		user.setTomatoTime(22);
+		user.setRemainingTime(8);
+		manager.record(user, 16, 8);
+		assertEquals(24, manager.getTotalTime(user));
 
 	}
 
@@ -53,7 +55,7 @@ public class StatisticManagerTest {
 		StatisticManager manager = StatisticManager.getInstance();
 		User user = new User(nr);
 		user.setRemainingTime(remainingTime);
-		manager.add(new Tomato(user, TomatoTerminationReason.TERMINATED_DUE_PROCESS));
+		manager.record(user, 0, remainingTime);
 	}
 
 }
