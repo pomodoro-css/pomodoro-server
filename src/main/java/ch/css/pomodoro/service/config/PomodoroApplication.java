@@ -21,7 +21,7 @@ public class PomodoroApplication extends Application<PomodoroConfiguration> {
 		super.initialize(bootstrap);
 		bootstrap.addBundle(new AssetsBundle("/web/", "/info", "/infoview/index.html", "infoview"));
 		//bootstrap.addBundle(new AssetsBundle("/web/infoview", "/info", "index.html", "infoview"));
-		bootstrap.addBundle(new AssetsBundle("/web/lib/*", "/lib/", "/lib/*", "lib"));
+		bootstrap.addBundle(new AssetsBundle("/web/lib/", "/lib", null, "lib"));
 		bootstrap.addBundle(new AssetsBundle("/web/infoview/js", "/info/js", null, "js"));
 		bootstrap.addBundle(new AssetsBundle("/web/adminview/", "/admin", "index.html", "adminview"));
 	}
