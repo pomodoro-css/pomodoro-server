@@ -46,7 +46,7 @@ public class UsersResource {
 	@Path("/{nr}/start")
 	public Response start(@PathParam("nr") String nr, @QueryParam("tomatotime") int tomatotime, @QueryParam("taskname") String taskName) {
 		if (tomatotime == 0) {
-			tomatotime = Config.defaultTomatoTimeInMillis;
+			tomatotime = Config.defaultTomatoTimeInSeconds;
 		}
 		UserManager.getInstance().start(nr, tomatotime, taskName );
 		return Response.ok().build();
