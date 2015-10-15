@@ -5,6 +5,7 @@ import ch.css.pomodoro.service.health.TimerAliveCheck;
 import ch.css.pomodoro.service.resources.AdminResource;
 import ch.css.pomodoro.service.resources.GroupResource;
 import ch.css.pomodoro.service.resources.HistoryResource;
+import ch.css.pomodoro.service.resources.StatisticResource;
 import ch.css.pomodoro.service.resources.UsersResource;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
@@ -40,6 +41,7 @@ public class PomodoroApplication extends Application<PomodoroConfiguration> {
 
 		environment.jersey().register(new UsersResource());
 		environment.jersey().register(new GroupResource());
+		environment.jersey().register(new StatisticResource());
 		environment.jersey().register(new HistoryResource());
 		environment.jersey().register(new AdminResource());
 

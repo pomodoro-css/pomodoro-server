@@ -7,19 +7,23 @@ public class Tomato {
 	private final int tomatoTime;
 	private final TomatoTerminationReason timerState;
 	private final String taskName;
-	
-	public Tomato(int tomatoTime, DateTime startTime, TomatoTerminationReason state, String taskName){
-		this.tomatoTime = tomatoTime;
-		this.startTime = startTime;
+	private final int remainingTime;
+	private final String userNr;
+
+	public Tomato(User user, TomatoTerminationReason state) {
+		this.tomatoTime = user.getTomatoTime();
+		this.remainingTime = user.getRemainingTime();
+		this.startTime = user.getStartTime();
 		this.timerState = state;
-		this.taskName = taskName;
+		this.taskName = user.getTaskName();
+		this.userNr = user.getNr();
 	}
-	
-	public DateTime getStartTime(){
+
+	public DateTime getStartTime() {
 		return this.startTime;
 	}
-	
-	public TomatoTerminationReason getTimerState(){
+
+	public TomatoTerminationReason getTimerState() {
 		return timerState;
 	}
 
@@ -29,5 +33,13 @@ public class Tomato {
 
 	public String getTaskName() {
 		return taskName;
+	}
+
+	public int getRemainingTime() {
+		return remainingTime;
+	}
+
+	public String getUserNr() {
+		return userNr;
 	}
 }

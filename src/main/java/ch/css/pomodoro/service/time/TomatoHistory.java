@@ -17,7 +17,7 @@ public class TomatoHistory {
 	}
 
 	void recordUser(User user, TomatoTerminationReason reason) {
-		Tomato tomato = new Tomato(user.getTomatoTime(), user.getStartTime(), reason, user.getTaskName());
+		Tomato tomato = new Tomato(user, reason);
 
 		List<Tomato> tomatos = history.get(user.getNr());
 		if (tomatos == null) {
