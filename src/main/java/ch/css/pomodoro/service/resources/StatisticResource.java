@@ -17,8 +17,14 @@ public class StatisticResource {
 
 	@GET
 	@Path("/biggest")
-	public List<UserStatistic> getConfig() {
+	public List<UserStatistic> getBiggest() {
 		return StatisticManager.getInstance().getBiggestTomatoes();
+	}
+
+	@GET
+	@Path("/looser")
+	public List<UserStatistic> getLooser() {
+		return StatisticManager.getInstance().getLooserTomatoes();
 	}
 
 	@GET

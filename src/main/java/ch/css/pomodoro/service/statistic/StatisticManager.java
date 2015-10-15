@@ -41,6 +41,21 @@ public class StatisticManager {
 
 	}
 
+	public List<UserStatistic> getLooserTomatoes() {
+		List<UserStatistic> statisticSortable = sortLooser();
+		return getMaxList(statisticSortable);
+	}
+
+	public List<UserStatistic> getBiggestTomatoes() {
+		List<UserStatistic> statisticSortable = sortBiggest();
+		return getMaxList(statisticSortable);
+	}
+
+	private List<UserStatistic> getMaxList(List<UserStatistic> statisticSortable) {
+		int max = statisticSortable.size() < 5 ? statisticSortable.size() : 5;
+		return statisticSortable.subList(0, max);
+	}
+
 	private UserStatistic getStatistic(String nr) {
 		UserStatistic statistic = statisticsRepo.get(nr);
 		if (statistic == null) {
@@ -50,9 +65,22 @@ public class StatisticManager {
 		return statistic;
 	}
 
-	public List<UserStatistic> getBiggestTomatoes() {
+	private List<UserStatistic> sortLooser() {
 		List<UserStatistic> statisticSortable = new ArrayList<>(statisticsRepo.values());
+		Collections.sort(statisticSortable, new Comparator<UserStatistic>() {
+			@Override
+			public int compare(UserStatistic stat1, UserStatistic stat2) {
+				if (stat1.getTotalTime() > stat2.getTotalTime()) {
+					return -1;
+				}
+				return 1;
+			}
+		});
+		return statisticSortable;
+	}
 
+	private List<UserStatistic> sortBiggest() {
+		List<UserStatistic> statisticSortable = new ArrayList<>(statisticsRepo.values());
 		Collections.sort(statisticSortable, new Comparator<UserStatistic>() {
 			@Override
 			public int compare(UserStatistic stat1, UserStatistic stat2) {
@@ -62,9 +90,7 @@ public class StatisticManager {
 				return -1;
 			}
 		});
-
-		int max = statisticSortable.size() < 5 ? statisticSortable.size() : 5;
-		return statisticSortable.subList(0, max);
+		return statisticSortable;
 	}
 
 }
