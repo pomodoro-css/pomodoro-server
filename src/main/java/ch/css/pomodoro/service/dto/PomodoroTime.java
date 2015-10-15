@@ -4,15 +4,15 @@ import org.joda.time.DateTime;
 
 public class PomodoroTime {
 	private DateTime startTime;
-	private TerminationReason terminationDue;
+	private TimerState timerState;
 	
 	public PomodoroTime(){
 		this.startTime = DateTime.now();
-		this.terminationDue = TerminationReason.RUNNING;
+		this.timerState = TimerState.RUNNING;
 	}
 
-	public void stop(TerminationReason value) {
-		this.terminationDue = value;
+	public void stop(TimerState value) {
+		this.timerState = value;
 		
 	}
 	
@@ -20,7 +20,7 @@ public class PomodoroTime {
 		return this.startTime;
 	}
 	
-	public TerminationReason getTerminationDue(){
-		return terminationDue;
+	public TimerState getTimerState(){
+		return timerState;
 	}
 }

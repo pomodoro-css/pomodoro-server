@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import ch.css.pomodoro.service.dto.TerminationReason;
+import ch.css.pomodoro.service.dto.TimerState;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
 
@@ -30,7 +30,7 @@ public class TimeCalculator {
 			user.setState(UserState.ONLINE);
 			user.setStartTime(null);
 			user.setRemainingTime(0);
-			user.stopTimer(TerminationReason.NORMAL);
+			user.stopTimer(TimerState.TERMINATED_DUE_PROCESS);
 		} else {
 			int remainingTimeInSeconds = Long.valueOf(remainingTimeInMillis).intValue();
 			remainingTimeInSeconds /= 1000;

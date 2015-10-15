@@ -87,7 +87,7 @@ public class User {
 		pomodoroTimeVector.addElement(new PomodoroTime());
 	}
 
-	public void stopTimer(TerminationReason value) {
+	public void stopTimer(TimerState value) {
 		pomodoroTimeVector.lastElement().stop(value);
 	}
 	
