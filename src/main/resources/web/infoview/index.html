@@ -16,8 +16,12 @@
 
 <body ng-app="pomodoro" ng-controller="pomodoroController as vm">
  <h1>Angemeldete Tomaten</h1>
- <ul>
-  <li ng-repeat="user in vm.users">{{user.name}} {{user.group.name}} {{user.state}}</li>
+ 
+ <ul ng-repeat="user in vm.users">
+  <li>{{user.nr}}</li>
+  <li>{{user.name}}</li>
+  <li>{{user.group.name}}</li>
+  <li>{{user.state}}</li>
  </ul>
 
 
