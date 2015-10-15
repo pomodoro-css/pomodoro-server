@@ -6,7 +6,6 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import ch.css.pomodoro.service.dto.Group;
-import ch.css.pomodoro.service.dto.Tomato;
 import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
@@ -15,9 +14,11 @@ public class UserManager {
 
 	private static UserManager instance;
 	private UserRepository repo;
+	private TomatoHistory history;
 
 	private UserManager() {
 		repo = new UserRepository();
+		history = new TomatoHistory();
 	}
 
 	public static UserManager getInstance() {
@@ -75,8 +76,7 @@ public class UserManager {
 	public void stop(String nr, TomatoTerminationReason reason) {
 		User user = repo.get(nr);
 		if (user != null && user.getState().isBusy()) {
-			Tomato tomato = new Tomato(user.getTomatoTime(), user.getStartTime(), reason, user.getTaskName());
-			user.getTomatoHistory().add(tomato);
+			history.recordUser(user, reason);
 
 			user.setState(UserState.ONLINE);
 			user.setRemainingTime(0);
