@@ -3,10 +3,12 @@ package ch.css.pomodoro.service.config;
 import ch.css.pomodoro.service.health.ConfigCheck;
 import ch.css.pomodoro.service.health.TimerAliveCheck;
 import ch.css.pomodoro.service.resources.AdminResource;
+import ch.css.pomodoro.service.resources.BroadcasterResource;
 import ch.css.pomodoro.service.resources.GroupResource;
 import ch.css.pomodoro.service.resources.HistoryResource;
 import ch.css.pomodoro.service.resources.StatisticResource;
 import ch.css.pomodoro.service.resources.UsersResource;
+import ch.css.pomodoro.service.websocket.BroadcastServlet;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.setup.Bootstrap;
@@ -49,6 +51,10 @@ public class PomodoroApplication extends Application<PomodoroConfiguration> {
 
 		environment.healthChecks().register("config", new ConfigCheck());
 		environment.healthChecks().register("thread", new TimerAliveCheck());
+
+		environment.jersey().register(new BroadcasterResource(environment.getObjectMapper()));
+
+		environment.getApplicationContext().getServletHandler().addServletWithMapping(BroadcastServlet.class, "/ws/*");
 
 	}
 }
