@@ -1,1 +1,35 @@
-you are on admin view
+<!DOCTYPE html>
+<html>
+<head lang="en">
+   <meta charset="UTF-8">
+   <title>Dropwizard Websockets Example</title>
+   <style>
+      .status {
+         border-radius: 5px;
+         height: 200px;
+         width: 90%;
+         padding: 5px;
+         background-color: #AAA;
+         overflow: scroll;
+      }
+   </style>
+</head>
+<body>
+
+<h1>Dropwizard Websockets Example</h1>
+
+<div id="status" class="status">Ready to connect.</div>
+
+<h2>Test-controls</h2>
+
+<label for="msg">Message:</label>
+<input type="text" id="msg"/>
+<button id="sendBtn">Send</button>
+<button id="broadcastBtn">Broadcast</button>
+<button id="connectBtn">Connect</button>
+<button id="disconnectBtn">Disconnect</button>
+
+<script src="/lib/jquery-2.1.4/jquery-2.1.4.min.js"></script>
+<script src="/admin/js/admin-view.js"></script>
+
+</body>
