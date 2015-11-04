@@ -5,12 +5,17 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+
 import ch.css.pomodoro.service.dto.Group;
 import ch.css.pomodoro.service.dto.Tomato;
 import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
 import ch.css.pomodoro.service.statistic.StatisticManager;
+import ch.css.pomodoro.service.websocket.BroadcastSocket;
 
 public class UserManager {
 
@@ -78,6 +83,14 @@ public class UserManager {
 		user.setRemainingTime(tomatotime);
 		user.setTaskName(taskName);
 		user.setStartTime(DateTime.now());
+		
+		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+		try {
+			String json = ow.writeValueAsString(user);
+			BroadcastSocket.broadcast(json);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void stop(String nr, TomatoTerminationReason reason) {
@@ -88,6 +101,14 @@ public class UserManager {
 			user.setState(UserState.ONLINE);
 			user.setRemainingTime(0);
 			user.setStartTime(null);
+			
+			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+			try {
+				String json = ow.writeValueAsString(user);
+				BroadcastSocket.broadcast(json);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -96,6 +117,14 @@ public class UserManager {
 		if (user != null) {
 			stop(nr, TomatoTerminationReason.TERMINATED_DUE_USER);
 			user.setState(UserState.OFFLINE);
+			
+			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
+			try {
+				String json = ow.writeValueAsString(user);
+				BroadcastSocket.broadcast(json);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
