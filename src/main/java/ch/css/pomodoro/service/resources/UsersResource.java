@@ -76,7 +76,7 @@ public class UsersResource {
 		UserManager.getInstance().stop(nr, TomatoTerminationReason.TERMINATED_DUE_USER);
 
 		// Broadcast stop tomatoTime
-		BroadcastSocket.broadcast(getJSonObject("stop", nr));
+		BroadcastSocket.broadcast(getJSonObject("stop", UserManager.getInstance().getUser(nr)));
 
 		return Response.ok().build();
 	}

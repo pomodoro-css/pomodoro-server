@@ -17,6 +17,7 @@
 <script src="/lib/angular-1.4/angular-route.min.js"></script>
 <script src="/lib/angular-1.4/angular-resource.min.js"></script>
 <script src="/lib/angular-1.4/ng-websocket.js"></script>
+<script src="/lib/angular-1.4/angular-timer-all.min.js"></script>
 
 
 <script src="/info/js/pomodoro.modul.js"></script>
@@ -57,8 +58,8 @@
 					<i class="fa fa-user infoview-font-normal"></i> {{user.nr}}
 				</div>
 				<div class="col-md-4 infoview-font-normal">{{user.name}}</div>
-				<div class="col-md-2 infoview-font-normal"><i class="fa fa-clock-o"></i> {{user.remainingTime
-					| secondsToDateTime | date:'HH:mm:ss'}}</div>
+				<timer class="col-md-2 infoview-font-normal" interval="1000" ng-attr-end-time="user.state !== 'BUSY' ? 10 : 0" ng-attr-countdown="user.remainingTime">
+					<i class="fa fa-clock-o"></i> {{hhours}}:{{mminutes}}:{{sseconds}}</timer>
 			</div>
 
 		</div>

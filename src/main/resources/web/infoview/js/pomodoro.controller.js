@@ -9,12 +9,18 @@ angular.module('pomodoro').controller('pomodoroController', function(pomodoroSer
 
 		switch (response.method) {
 		case 'addUser':
-			
 			$scope.$apply(function(){
 				vm.users.push(response.object);
 		     });
 			break;
-			
+		case 'deleteUser':
+			removeUser(response.object);
+			break;
+		case 'stop':
+		case 'start':
+		case 'offline':
+			updateUser(response.object);
+			break;
 		}
 		console.log("Got message", msg, this);
     });
@@ -24,6 +30,24 @@ angular.module('pomodoro').controller('pomodoroController', function(pomodoroSer
 		vm.biggestTomato = pomodoroService.loadBiggestTomato();
 	};
 
+	var updateUser = function(user){
+		vm.users = $.grep(vm.users, function(e){ 
+		     return e.nr != user.nr; 
+		});
+		
+		$scope.$apply(function(){
+			vm.users.push(user);
+	    });
+	};
+	
+	var removeUser = function(user){
+		$scope.$apply(function(){
+			vm.users = $.grep(vm.users, function(e){ 
+			     return e.nr != user.nr; 
+			});
+	    });
+	};
+	
 	//var promise = $interval(refreshData, 4000);
 
 	// Cancel interval on page changes

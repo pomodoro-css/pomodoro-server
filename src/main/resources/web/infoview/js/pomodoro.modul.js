@@ -1,1 +1,1 @@
-var pomodoroApp = angular.module('pomodoro', ['ngResource', 'angular.filter', 'ngWebsocket']);
+var pomodoroApp = angular.module('pomodoro', ['ngResource', 'angular.filter', 'ngWebsocket', 'timer']);
