@@ -19,6 +19,7 @@ angular.module('pomodoro').controller('pomodoroController', function(pomodoroSer
 		case 'stop':
 		case 'start':
 		case 'offline':
+		case 'online':
 			updateUser(response.object);
 			break;
 		}

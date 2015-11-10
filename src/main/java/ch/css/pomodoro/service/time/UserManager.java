@@ -1,13 +1,20 @@
 package ch.css.pomodoro.service.time;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.joda.time.DateTime;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import ch.css.pomodoro.service.dto.Group;
 import ch.css.pomodoro.service.dto.Tomato;
@@ -93,14 +100,8 @@ public class UserManager {
 			user.setState(UserState.ONLINE);
 			user.setRemainingTime(0);
 			user.setStartTime(null);
-			
-			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-			try {
-				String json = ow.writeValueAsString(user);
-				BroadcastSocket.broadcast(json);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
+
+			BroadcastSocket.broadcast(getJSonObject("online", user));
 		}
 	}
 
@@ -109,14 +110,9 @@ public class UserManager {
 		if (user != null) {
 			stop(nr, TomatoTerminationReason.TERMINATED_DUE_USER);
 			user.setState(UserState.OFFLINE);
-			
-			ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-			try {
-				String json = ow.writeValueAsString(user);
-				BroadcastSocket.broadcast(json);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
+
+			BroadcastSocket.broadcast(getJSonObject("offline", user));
+
 		}
 
 	}
@@ -131,6 +127,37 @@ public class UserManager {
 
 	public List<Tomato> getHistory(String nr) {
 		return history.getHistory(nr);
+	}
+
+	private String getJSonObject(String method, Object object) {
+		Map<String, Object> theMap = new LinkedHashMap<>();
+
+		// put your objects in the Map with their names as keys
+		theMap.put("method", method);
+		theMap.put("object", object);
+
+		// create ObjectMapper instance
+		ObjectMapper objectMapper = new ObjectMapper();
+
+		// configure Object mapper for pretty print
+		objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+		// writing to console, can write to any output stream such as file
+		StringWriter jsonString = new StringWriter();
+		try {
+			objectMapper.writeValue(jsonString, theMap);
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return jsonString.toString();
 	}
 
 }
