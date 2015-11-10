@@ -1,9 +1,9 @@
-angular.module('pomodoro').factory('pomodoroWebSocket', function($websocket) {
+angular.module('pomodoro').factory('pomodoroWebSocket', function($websocket, $location) {
 
 	return {
 		start : function(callback) {
 			var ws = $websocket.$new({
-				url : 'ws://localhost:8080/ws', // instance of ngWebsocket,
+				url : 'ws://' +$location.host() + ':' + $location.port()+'/ws', // instance of ngWebsocket,
 												// handled by
 				// $websocket service
 				reconnect : true,
