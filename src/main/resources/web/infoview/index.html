@@ -30,7 +30,7 @@
 <body ng-app="pomodoro" ng-controller="pomodoroController as vm">
 	<div class="container">
 		<h1>Biggest Tomato</h1>
-		<div ng-repeat="tomato in biggestTomato" class="container-fluid jumbotron">
+		<div ng-repeat="tomato in vm.biggestTomato" class="container-fluid jumbotron">
 			<div class="col-md-4 infoview-font-normal">
 				<i class="fa fa-user infoview-font-normal"></i>
 				{{tomato.userNr}}
@@ -43,7 +43,7 @@
 
 		<h1>Angemeldete Tomaten</h1>
 
-		<div ng-repeat="(key, value) in users | groupBy :'group.name'"
+		<div ng-repeat="(key, value) in vm.users | groupBy :'group.name'"
 			class="container-fluid jumbotron">
 			<h3>{{key}}</h3>
 			<hr>
