@@ -16,31 +16,34 @@
 <script src="/lib/angular-1.4/angular-filter.min.js"></script>
 <script src="/lib/angular-1.4/angular-route.min.js"></script>
 <script src="/lib/angular-1.4/angular-resource.min.js"></script>
+<script src="/lib/angular-1.4/ng-websocket.js"></script>
 
 
 <script src="/info/js/pomodoro.modul.js"></script>
+<script src="/info/js/pomodoro-websocket.factory.js"></script>
 <script src="/info/js/pomodoro.controller.js"></script>
 <script src="/info/js/pomodoro.service.js"></script>
 <script src="/info/js/pomodoro.seconds-to-time.filter.js"></script>
+<script src="/info/js/pomodoro.run.js"></script>
 </head>
 
 <body ng-app="pomodoro" ng-controller="pomodoroController as vm">
 	<div class="container">
 		<h1>Biggest Tomato</h1>
-		<div ng-repeat="tomato in vm.biggestTomato" class="container-fluid jumbotron">
+		<div ng-repeat="tomato in biggestTomato" class="container-fluid jumbotron">
 			<div class="col-md-4 infoview-font-normal">
 				<i class="fa fa-user infoview-font-normal"></i>
 				{{tomato.userNr}}
 			</div>
 			<div class="col-md-4 infoview-font-normal">{{tomato.name}}</div>
-			<div class="col-md-4 infoview-font-normal">{{tomato.totalTime | secondsToDateTime | date:'HH:mm:ss'}}</div>
+			<div class="col-md-4 infoview-font-normal"><i class="fa fa-clock-o"></i> {{tomato.totalTime | secondsToDateTime | date:'HH:mm:ss'}}</div>
 			<!--  <div>{{tomato}}</div> -->
 		</div>
 
 
 		<h1>Angemeldete Tomaten</h1>
 
-		<div ng-repeat="(key, value) in vm.users | groupBy :'group.name'"
+		<div ng-repeat="(key, value) in users | groupBy :'group.name'"
 			class="container-fluid jumbotron">
 			<h3>{{key}}</h3>
 			<hr>
@@ -54,7 +57,7 @@
 					<i class="fa fa-user infoview-font-normal"></i> {{user.nr}}
 				</div>
 				<div class="col-md-4 infoview-font-normal">{{user.name}}</div>
-				<div class="col-md-2 infoview-font-normal">{{user.remainingTime
+				<div class="col-md-2 infoview-font-normal"><i class="fa fa-clock-o"></i> {{user.remainingTime
 					| secondsToDateTime | date:'HH:mm:ss'}}</div>
 			</div>
 

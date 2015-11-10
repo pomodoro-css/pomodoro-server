@@ -49,11 +49,12 @@ public class PomodoroApplication extends Application<PomodoroConfiguration> {
 
 		AdminManager.init();
 
+		// Health Check
 		environment.healthChecks().register("config", new ConfigCheck());
 		environment.healthChecks().register("thread", new TimerAliveCheck());
 
+		// WebSocket
 		environment.jersey().register(new BroadcasterResource(environment.getObjectMapper()));
-
 		environment.getApplicationContext().getServletHandler().addServletWithMapping(BroadcastServlet.class, "/ws/*");
 
 	}

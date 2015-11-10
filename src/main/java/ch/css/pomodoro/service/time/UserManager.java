@@ -83,14 +83,6 @@ public class UserManager {
 		user.setRemainingTime(tomatotime);
 		user.setTaskName(taskName);
 		user.setStartTime(DateTime.now());
-		
-		ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
-		try {
-			String json = ow.writeValueAsString(user);
-			BroadcastSocket.broadcast(json);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void stop(String nr, TomatoTerminationReason reason) {
