@@ -1,5 +1,6 @@
 package ch.css.pomodoro.service.config;
 
+import ch.css.pomodoro.service.statistic.StatisticManager;
 import ch.css.pomodoro.service.time.UserManager;
 import ch.css.pomodoro.service.time.ValidationThread;
 
@@ -10,10 +11,12 @@ public class AdminManager {
 	private UserManager usermanager;
 	private ValidationThread validator;
 	private Config config;
+	private StatisticManager statisticManager;
 
 	private AdminManager() {
 		usermanager = UserManager.getInstance();
 		config = new Config();
+		statisticManager = StatisticManager.getInstance();
 		startTimer();
 	}
 
@@ -34,7 +37,7 @@ public class AdminManager {
 	}
 
 	public String startTimer() {
-		validator = new ValidationThread(usermanager, config);
+		validator = new ValidationThread(usermanager, config, statisticManager);
 		validator.start();
 
 		return "timer successfull started";

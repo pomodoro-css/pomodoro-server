@@ -13,6 +13,9 @@ angular.module('pomodoro').factory('pomodoroWebSocket', function($websocket, $lo
 
 			ws.$on('$open', function() {
 				console.log('WebSocket is open!');
+				
+				var open_data = { method: 'open' };
+				callback(open_data);
 			});
 
 			ws.$on('$close', function() {
@@ -21,6 +24,14 @@ angular.module('pomodoro').factory('pomodoroWebSocket', function($websocket, $lo
 
 			ws.$on('$message', function(msg) {
 				callback(msg);
+			});
+			
+			ws.$on('$error', function(msg){
+				var error_data = {
+				        method: 'error'
+				    };
+				
+				callback(error_data);
 			});
 		}
 	}

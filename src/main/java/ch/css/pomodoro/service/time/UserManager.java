@@ -21,6 +21,7 @@ import ch.css.pomodoro.service.dto.Tomato;
 import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
+import ch.css.pomodoro.service.helper.JSonConverter;
 import ch.css.pomodoro.service.statistic.StatisticManager;
 import ch.css.pomodoro.service.websocket.BroadcastSocket;
 
@@ -101,7 +102,7 @@ public class UserManager {
 			user.setRemainingTime(0);
 			user.setStartTime(null);
 
-			BroadcastSocket.broadcast(getJSonObject("online", user));
+			BroadcastSocket.broadcast(JSonConverter.getJSonObject("online", user));
 		}
 	}
 
@@ -111,7 +112,7 @@ public class UserManager {
 			stop(nr, TomatoTerminationReason.TERMINATED_DUE_USER);
 			user.setState(UserState.OFFLINE);
 
-			BroadcastSocket.broadcast(getJSonObject("offline", user));
+			BroadcastSocket.broadcast(JSonConverter.getJSonObject("offline", user));
 
 		}
 
@@ -128,36 +129,4 @@ public class UserManager {
 	public List<Tomato> getHistory(String nr) {
 		return history.getHistory(nr);
 	}
-
-	private String getJSonObject(String method, Object object) {
-		Map<String, Object> theMap = new LinkedHashMap<>();
-
-		// put your objects in the Map with their names as keys
-		theMap.put("method", method);
-		theMap.put("object", object);
-
-		// create ObjectMapper instance
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		// configure Object mapper for pretty print
-		objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-
-		// writing to console, can write to any output stream such as file
-		StringWriter jsonString = new StringWriter();
-		try {
-			objectMapper.writeValue(jsonString, theMap);
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return jsonString.toString();
-	}
-
 }

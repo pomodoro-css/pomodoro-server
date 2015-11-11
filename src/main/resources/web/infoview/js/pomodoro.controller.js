@@ -1,13 +1,19 @@
 angular.module('pomodoro').controller('pomodoroController', function(pomodoroService, pomodoroWebSocket, $filter, $interval, $scope) {
 	var vm = this;
 	    
-	vm.users = pomodoroService.loadUsers();
-	vm.biggestTomato = pomodoroService.loadBiggestTomato();
+	//vm.users = pomodoroService.loadUsers();
+	//vm.biggestTomato = pomodoroService.loadBiggestTomato();
 	
 	pomodoroWebSocket.start(function (msg) {
 		var response = angular.fromJson(msg);
 
 		switch (response.method) {
+		case 'open':
+			$scope.$apply(function(){
+				vm.users = pomodoroService.loadUsers();
+				vm.biggestTomato = pomodoroService.loadBiggestTomato();
+			});
+			break;
 		case 'addUser':
 			$scope.$apply(function(){
 				vm.users.push(response.object);
@@ -16,11 +22,22 @@ angular.module('pomodoro').controller('pomodoroController', function(pomodoroSer
 		case 'deleteUser':
 			removeUser(response.object);
 			break;
+		case 'newBiggestTomato':
+			$scope.$apply(function(){
+				vm.biggestTomato = pomodoroService.loadBiggestTomato();
+			});
+			break;
 		case 'stop':
 		case 'start':
 		case 'offline':
 		case 'online':
 			updateUser(response.object);
+			break;
+		case 'error':
+			$scope.$apply(function(){
+				vm.users = {};
+				vm.biggestTomato = {};
+		    });
 			break;
 		}
 		console.log("Got message", msg, this);

@@ -26,6 +26,7 @@ import ch.css.pomodoro.service.config.Config;
 import ch.css.pomodoro.service.dto.TomatoTerminationReason;
 import ch.css.pomodoro.service.dto.User;
 import ch.css.pomodoro.service.dto.UserState;
+import ch.css.pomodoro.service.helper.JSonConverter;
 import ch.css.pomodoro.service.time.UserManager;
 import ch.css.pomodoro.service.websocket.BroadcastSocket;
 
@@ -50,7 +51,7 @@ public class UsersResource {
 		UserManager.getInstance().setOffline(nr);
 
 		// Broadcast set user offline
-		BroadcastSocket.broadcast(getJSonObject("offline", UserManager.getInstance().getUser(nr)));
+		BroadcastSocket.broadcast(JSonConverter.getJSonObject("offline", UserManager.getInstance().getUser(nr)));
 
 		return Response.ok().build();
 	}
@@ -65,7 +66,7 @@ public class UsersResource {
 		UserManager.getInstance().start(nr, tomatotime, taskName);
 
 		// Broadcast start tomatoTime
-		BroadcastSocket.broadcast(getJSonObject("start", UserManager.getInstance().getUser(nr)));
+		BroadcastSocket.broadcast(JSonConverter.getJSonObject("start", UserManager.getInstance().getUser(nr)));
 
 		return Response.ok().build();
 	}
@@ -76,7 +77,7 @@ public class UsersResource {
 		UserManager.getInstance().stop(nr, TomatoTerminationReason.TERMINATED_DUE_USER);
 
 		// Broadcast stop tomatoTime
-		BroadcastSocket.broadcast(getJSonObject("stop", UserManager.getInstance().getUser(nr)));
+		BroadcastSocket.broadcast(JSonConverter.getJSonObject("stop", UserManager.getInstance().getUser(nr)));
 
 		return Response.ok().build();
 	}
@@ -98,7 +99,7 @@ public class UsersResource {
 
 		if (UserManager.getInstance().addUser(user)) {
 			// Broadcast new User
-			BroadcastSocket.broadcast(getJSonObject("addUser", user));
+			BroadcastSocket.broadcast(JSonConverter.getJSonObject("addUser", user));
 
 			return Response.ok().build();
 		} else {
@@ -111,43 +112,11 @@ public class UsersResource {
 	public Response deleteUser(@PathParam("nr") String nr) {
 		if (UserManager.getInstance().removeUser(nr)) {
 			// Broadcast delete User
-			BroadcastSocket.broadcast(getJSonObject("deleteUser", nr));
+			BroadcastSocket.broadcast(JSonConverter.getJSonObject("deleteUser", nr));
 
 			return Response.ok().build();
 		} else {
 			return Response.notModified().build();
 		}
 	}
-
-	private String getJSonObject(String method, Object object) {
-		Map<String, Object> theMap = new LinkedHashMap<>();
-
-		// put your objects in the Map with their names as keys
-		theMap.put("method", method);
-		theMap.put("object", object);
-
-		// create ObjectMapper instance
-		ObjectMapper objectMapper = new ObjectMapper();
-
-		// configure Object mapper for pretty print
-		objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
-
-		// writing to console, can write to any output stream such as file
-		StringWriter jsonString = new StringWriter();
-		try {
-			objectMapper.writeValue(jsonString, theMap);
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return jsonString.toString();
-	}
-
 }
