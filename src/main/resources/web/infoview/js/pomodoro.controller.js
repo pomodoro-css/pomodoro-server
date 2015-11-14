@@ -1,9 +1,6 @@
 angular.module('pomodoro').controller('pomodoroController', function(pomodoroService, pomodoroWebSocket, $filter, $interval, $scope) {
 	var vm = this;
 	    
-	//vm.users = pomodoroService.loadUsers();
-	//vm.biggestTomato = pomodoroService.loadBiggestTomato();
-	
 	pomodoroWebSocket.start(function (msg) {
 		var response = angular.fromJson(msg);
 
@@ -65,14 +62,4 @@ angular.module('pomodoro').controller('pomodoroController', function(pomodoroSer
 			});
 	    });
 	};
-	
-	//var promise = $interval(refreshData, 4000);
-
-	// Cancel interval on page changes
-	$scope.$on('$destroy', function(){
-	    if (angular.isDefined(promise)) {
-	        $interval.cancel(promise);
-	        promise = undefined;
-	    }
-	});
 });
