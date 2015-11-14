@@ -1,5 +1,7 @@
 package ch.css.pomodoro.service.time;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import ch.css.pomodoro.service.config.Config;
@@ -21,18 +23,17 @@ public class ValidationThread extends Thread {
 	}
 
 	public void run() {
-		List<UserStatistic> userStatistics = statistic.getBiggestTomatoes();
-		
+		List<UserStatistic> userStatistics = clone(statistic.getBiggestTomatoes());
+
 		while (!Thread.currentThread().isInterrupted()) {
 			manager.validateUsers();
-			
-			// TODO Vergleich sollte Zeit einschliessen
-			if(!userStatistics.equals(statistic.getBiggestTomatoes())){
-				userStatistics = statistic.getBiggestTomatoes();
+
+			if (!userStatistics.equals(statistic.getBiggestTomatoes())) {
+				userStatistics = clone(statistic.getBiggestTomatoes());
 				
 				BroadcastSocket.broadcast(JSonConverter.getJSonObject("newBiggestTomato", userStatistics));
 			}
-			
+
 			try {
 				Thread.sleep(config.getTimerInMillis());
 			} catch (InterruptedException e) {
@@ -40,5 +41,19 @@ public class ValidationThread extends Thread {
 			}
 		}
 
+	}
+
+	private ArrayList<UserStatistic> clone(List<UserStatistic> origList) {
+		ArrayList<UserStatistic> clonedList = new ArrayList<UserStatistic>();
+
+		for (UserStatistic userStatistic : origList) {
+			try {
+				clonedList.add((UserStatistic) userStatistic.clone());
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return clonedList;
 	}
 }
