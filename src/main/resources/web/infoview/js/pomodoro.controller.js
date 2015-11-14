@@ -24,7 +24,7 @@ angular.module('pomodoro').controller('pomodoroController', function(pomodoroSer
 			break;
 		case 'newBiggestTomato':
 			$scope.$apply(function(){
-				vm.biggestTomato = pomodoroService.loadBiggestTomato();
+				vm.biggestTomato = response.object;
 			});
 			break;
 		case 'stop':
