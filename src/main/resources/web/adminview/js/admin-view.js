@@ -37,6 +37,50 @@ var dwws = dwws || {};
       });
    });
 
+   $("#jsonBtn").click(function(){
+	   var msg = $("#msg").val();
+	   $.ajax({
+		   type:"POST",
+		   url: "/broadcast",
+		   data: msg,
+		   contentType: "application/json"
+	   });
+   });
+   
+   $("#broadcastAddUsersBtn").click(function(){
+	   var msg = [
+	               "{\"method\" : \"addUser\", \"object\" : { \"nr\" : \"P12340\", \"name\" : \"John\", \"group\" : { \"name\" : \"Kontakt Management\" }, \"state\" : \"ONLINE\", \"remainingTime\" : 0, \"tomatoTime\" : 0, \"startTime\" : null, \"taskName\" : null}}"
+	              ,"{\"method\" : \"addUser\", \"object\" : { \"nr\" : \"P12341\", \"name\" : \"Doe\", \"group\" : { \"name\" : \"Kontakt Management\" }, \"state\" : \"ONLINE\", \"remainingTime\" : 0, \"tomatoTime\" : 0, \"startTime\" : null, \"taskName\" : null}}"
+	              ,"{\"method\" : \"addUser\", \"object\" : { \"nr\" : \"P12342\", \"name\" : \"John\", \"group\" : { \"name\" : \"Kontakt Management\" }, \"state\" : \"OFFLINE\", \"remainingTime\" : 0, \"tomatoTime\" : 0, \"startTime\" : null, \"taskName\" : null}}"
+	              ,"{\"method\" : \"addUser\", \"object\" : { \"nr\" : \"P12343\", \"name\" : \"Mäge\", \"group\" : { \"name\" : \"Versicherungsabschluss CRM\" }, \"state\" : \"ONLINE\", \"remainingTime\" : 0, \"tomatoTime\" : 0, \"startTime\" : null, \"taskName\" : null}}"
+	              ,"{\"method\" : \"addUser\", \"object\" : { \"nr\" : \"P12344\", \"name\" : \"Säsch\", \"group\" : { \"name\" : \"Versicherungsabschluss CRM\" }, \"state\" : \"ONLINE\", \"remainingTime\" : 0, \"tomatoTime\" : 0, \"startTime\" : null, \"taskName\" : null}}"
+	   ];
+	   connectSocket();
+	   $.each(msg, function(i, element){
+		   $.ajax({
+			   type:"POST",
+			   url: "/broadcast",
+			   data: element,
+			   contentType: "application/json"
+		   });
+	   });
+   });
+   
+   $("#broadcastStartTimerBtn").click(function(){
+	   var msg = [
+	               "{ \"method\" : \"start\", \"object\" : { \"nr\" : \"P12340\", \"name\" : \"John\", \"group\" : { \"name\" : \"Kontakt Management\" }, \"state\" : \"BUSY\", \"remainingTime\" : 395, \"tomatoTime\" : 395, \"startTime\" : { \"millis\" : 1447795918702}, \"taskName\" : \"Ein ganz wichtiger Task\" }}"
+	   ];
+	   connectSocket();
+	   $.each(msg, function(i, element){
+		   $.ajax({
+			   type:"POST",
+			   url: "/broadcast",
+			   data: element,
+			   contentType: "application/json"
+		   });
+	   });
+   });
+   
    $("#sendBtn").click(function() {
       if(socket != null) {
          socket.send($("#msg").val());
